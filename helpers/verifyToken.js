@@ -1,22 +1,25 @@
-const jwt=require('jsonwebtoken')
+import pkg from 'jsonwebtoken';
+const { verify } = pkg;
 
-const verifyToken=(req,res,next)=>{
-    const token=req.cookies.token
-    // console.log(token)
-    if(!token){
+const verifyToken = (req, res, next) => {
+
+    const token = req.cookies.token
+
+    if (!token) {
+
         return res.status(401).json("You are not authenticated!")
     }
-    jwt.verify(token,process.env.SECRET,async (err,data)=>{
-        if(err){
+    verify(token, process.env.SECRET, async (err, data) => {
+
+        if (err) {
+
             return res.status(403).json("Token is not valid!")
         }
-        
-        req.userId=data._id
-       
-        // console.log("passed")
-        
+
+        req.userId = data._id
+
         next()
     })
 }
 
-module.exports=verifyToken
+export default verifyToken

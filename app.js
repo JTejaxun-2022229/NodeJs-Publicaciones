@@ -1,30 +1,36 @@
 import express, { json } from 'express'
-const app = express()
 import { connect } from 'mongoose'
 import { config } from 'dotenv'
 import cors from 'cors'
 import multer, { diskStorage } from 'multer'
-import { join } from "path"
+import { fileURLToPath } from 'url';
+import { dirname, join } from "path"
 import cookieParser from 'cookie-parser'
-import authRoute from './routes/auth'
-import userRoute from './routes/users'
-import postRoute from './routes/posts'
-import commentRoute from './routes/comments'
+import authRoute from './src/user/auth.routes.js'
+import userRoute from './src/user/user.routes.js'
+import postRoute from './src/post/post.routes.js'
+import commentRoute from './src/comment/comment.routes.js'
+
+const app = express()
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const connectDB = async () => {
+
     try {
+
         await connect(process.env.MONGO_URL)
         console.log("database is connected successfully!")
-
     }
     catch (err) {
+
         console.log(err)
     }
 }
 
 config()
 app.use(json())
-app.use("/images", (join(__dirname, "/images")))
+app.use("/images", express.static(join(__dirname, "/images")))
 app.use(cors({ origin: "http://localhost:5173", credentials: true }))
 app.use(cookieParser())
 app.use("/api/auth", authRoute)

@@ -1,6 +1,7 @@
 import User from './user.model.js'
 import { genSalt, hashSync, compare } from 'bcrypt'
-import { sign, verify } from 'jsonwebtoken'
+import pkg from 'jsonwebtoken';
+const { sign, verify } = pkg;
 
 export const createUser = async (req, res) => {
 

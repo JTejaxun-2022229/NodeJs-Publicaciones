@@ -4,12 +4,6 @@ import verifyToken from '../../helpers/verifyToken.js'
 
 const router = Router()
 
-router.post(
-
-    "/register",
-    createUser
-)
-
 router.get(
 
     "/:id",
@@ -28,24 +22,6 @@ router.delete(
     "/:id", 
     verifyToken, 
     deleteUser
-)
-
-router.post(
-
-    "/login",
-    login
-)
-
-router.get(
-
-    "/logout",
-    logout
-)
-
-router.get(
-
-    "/refetch",
-    refetch
 )
 
 export default router
