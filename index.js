@@ -11,6 +11,7 @@ const userRoute=require('./routes/users')
 const postRoute=require('./routes/posts')
 const commentRoute=require('./routes/comments')
 
+//database
 const connectDB=async()=>{
     try{
         await mongoose.connect(process.env.MONGO_URL)
@@ -22,6 +23,9 @@ const connectDB=async()=>{
     }
 }
 
+
+
+//middlewares
 dotenv.config()
 app.use(express.json())
 app.use("/images",express.static(path.join(__dirname,"/images")))
@@ -32,6 +36,7 @@ app.use("/api/users",userRoute)
 app.use("/api/posts",postRoute)
 app.use("/api/comments",commentRoute)
 
+//image upload
 const storage=multer.diskStorage({
     destination:(req,file,fn)=>{
         fn(null,"images")
